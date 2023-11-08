@@ -28,18 +28,26 @@ class _QuizState extends State<QuizScreen> {
     });
   }
 
+  void RestartQuiz() {
+    setState(() {
+      response = [];
+      activeScreen = landingPage(SwitchScreen);
+    });
+  }
+
   void chooseAnswer(String ans) {
     int index = response.length;
     Map<String, dynamic> map = {
       "ques": questions[index].ques,
       "rightAns": questions[index].answers[0],
       "selectedAns": ans,
+      "index": (index + 1).toString()
     };
     response.add(map);
     if (response.length == questions.length) {
       setState(() {
         // savedAnswers = [];
-        activeScreen = ResultScreen(response);
+        activeScreen = ResultScreen(response, RestartQuiz);
       });
     }
   }
